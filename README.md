@@ -38,7 +38,25 @@ A\*算法结合了$Dijkstra$算法和最佳优先的启发式函数，从而保�
 
 ## 项目结构
 
+```shell
+.                   
+├── README.md       
+├── main.py
+├── requirements.txt
+└── snake
+    ├── __init__.py
+    ├── pathfinding.py
+    └── snake.py
 
+1 directory, 6 files
+```
 
-## 运行结果
+```shell
+# A* 寻路算法 位于pathfinding.py文件 第30行
+def aStarSearch(self):
+	pass
+# 自动寻路 位于pathfinding.py文件 第107行
+def pathFinding():
+	pass
+```
 
