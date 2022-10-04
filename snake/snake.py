@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from turtle import *
 from random import *
 
@@ -103,14 +104,41 @@ def move():
     else:
         ontimer(move, 0)
 
-# setup(420, 420)
-# title("贪吃蛇")
-# hideturtle()
-# tracer(False)
-# listen()
-# onkey(lambda: change(0, 10), "Up")
-# onkey(lambda: change(-10, 0), "Left")
-# onkey(lambda: change(0, -10), "Down")
-# onkey(lambda: change(10, 0), "Right")
-# move()
-# done()
+
+def moveVirtual(snake_virtual, path_virtual):
+    global food_x, food_y
+    food_virtual_x = food_x
+    food_virtual_y = food_y
+    all_virtual_food = all_food.copy()
+    aim_virtual_x = aim_x
+    aim_virtual_y = aim_y
+
+    head_move_x = snake_virtual[-1][0] + aim_virtual_x
+    head_move_y = snake_virtual[-1][1] + aim_virtual_y
+
+    # 判断是否撞到边框或者撞到自己
+    if not inside(head_move_x, head_move_y) or [head_move_x, head_move_y] in snake_virtual:
+        return
+
+    snake_virtual.append([head_move_x, head_move_y])
+
+    # 判断是否吃到食物以及是否胜利
+    if head_move_x == food_virtual_x and head_move_y == food_virtual_y:
+        if len(snake_virtual) == len(all_virtual_food):
+            return
+    else:
+        snake_virtual.pop(0)
+
+
+if __name__ == "__main__":
+    setup(420, 420)
+    title("贪吃蛇")
+    hideturtle()
+    tracer(False)
+    listen()
+    onkey(lambda: change(0, 10), "Up")
+    onkey(lambda: change(-10, 0), "Left")
+    onkey(lambda: change(0, -10), "Down")
+    onkey(lambda: change(10, 0), "Right")
+    move()
+    done()

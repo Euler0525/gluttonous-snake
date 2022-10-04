@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 class Grid(object):
     def __init__(self, x, y):
         self.x = x
@@ -84,7 +85,7 @@ class AStar(object):
         if self.open_list is None:
             self.open_list = []
 
-        if x < -200 or x >= 2000 or y < -200 or y >= 200:
+        if x < -200 or x >= 200 or y < -200 or y >= 200:
             return False
         if [x, y] in snake_body:
             return False
@@ -111,7 +112,3 @@ class AStar(object):
             result_grid = result_grid.parent
 
         return path[::-10]
-
-
-if __name__ == "__main__":
-    pass
