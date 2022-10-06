@@ -17,7 +17,16 @@ from copy import deepcopy
 
 def mainAlgorithm():
     food_path = AStar(Grid(snake[-1][0], snake[-1][1]), Grid(food_x, food_y), snake).pathFinding()
-    tail_path = AStar(Grid(snake[-1][0], snake[-1][1]), Grid(snake[0][0] + 10, snake[0][1] + 10), snake).pathFinding()
+    tail = snake[0]
+    if [tail[0] + 10, tail[1] + 10] not in snake:
+        x, y = 10, 10
+    elif [tail[0] + 10, tail[1] - 10] not in snake:
+        x, y = 10, -10
+    elif [tail[0] - 10, tail[1] + 10] not in snake:
+        x, y = -10, 10
+    else:
+        x, y = -10, -10
+    tail_path = AStar(Grid(snake[-1][0], snake[-1][1]), Grid(snake[0][0] + x, snake[0][1] + y), snake).pathFinding()
 
     if len(food_path) != 0:
         tmp = moveVirtual(snake, food_path)
@@ -42,13 +51,22 @@ def moveVirtual(snake, path) -> list[list]:
     else:
         snake_virtual = path_virtual[0:length_snake]
     snake_virtual.reverse()
+    tail = snake_virtual[0]
+    if [tail[0] + 10, tail[1] + 10] not in snake_virtual:
+        x, y = 10, 10
+    elif [tail[0] + 10, tail[1] - 10] not in snake_virtual:
+        x, y = 10, -10
+    elif [tail[0] - 10, tail[1] + 10] not in snake_virtual:
+        x, y = -10, 10
+    else:
+        x, y = -10, -10
 
-    return AStar(Grid(snake_virtual[-1][0], snake_virtual[-1][1]), Grid(snake_virtual[0][0] + 10, snake_virtual[0][1] + 10),
+    return AStar(Grid(snake_virtual[-1][0], snake_virtual[-1][1]),
+                 Grid(snake_virtual[0][0] + x, snake_virtual[0][1] + y),
                  snake_virtual).pathFinding()
 
 
 def moveOneStep(snake_body, path):
-    print(path[0:2])  #################################################################
     global food_x, food_y
     head_move_x = snake_body[-1][0] + path[1][0] - path[0][0]
     head_move_y = snake_body[-1][1] + path[1][1] - path[0][1]
