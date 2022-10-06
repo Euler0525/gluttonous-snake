@@ -1,49 +1,46 @@
-# -*- coding: utf-8 -*-
+"""
+pathfinding -> 起点到终点的最短路径
+moveVirtual -> 能否找到蛇尾
+# if 能吃到食物
+     # 派虚拟蛇去吃，
+            # if吃完能跟着蛇尾走 真蛇去吃
+            # if吃完不能跟着蛇尾 真蛇跟着蛇尾走
+# else
+    # 真蛇跟着蛇尾
+"""
+
 from snake import *
-
-
-def turn(path: list[list]):
-    if path[1][0] - path[0][0] > 0:
-        change(10, 0)
-    elif path[1][1] - path[0][1] > 0:
-        change(0, 10)
-    elif path[1][0] - path[0][0] < 0:
-        change(-10, 0)
-    else:
-        change(0, -10)
-    move()
-
-
-def main():
-    setup(420, 420)
-    title("贪吃蛇")
-    hideturtle()
-    tracer(False)
-    mainAlgorithm()
+from copy import deepcopy
 
 
 def mainAlgorithm():
-    while all_food:
-        path = AStar(Grid(snake[-1][0], snake[-1][1]), Grid(food_x, food_y), snake).pathFinding()
-        if path:
-            # Virtual snake explore the way
-            path_virtual = path.copy()
-            snake_virtual = snake.copy()
-            moveVirtual(snake_virtual, path_virtual)
-
-            if AStar(Grid(snake_virtual[-1][0], snake_virtual[-1][1]), Grid(snake_virtual[0][0], snake_virtual[0][1]),
-                     snake_virtual).pathFinding():
-                # move to food
-                turn(path)
-            else:
-                # move to tail
-                path = AStar(Grid(snake[-1][0], snake[-1][1]), Grid(snake[0][0], snake[0][1]), snake).pathFinding()
-                turn(path)
+    food_path = AStar(Grid(snake[-1][0], snake[-1][1]), Grid(food_x, food_y), snake).pathFinding()
+    tail_path = AStar(Grid(snake[-1][0], snake[-1][1]), Grid(snake[0][0], snake[0][1]), snake).pathFinding()
+    if len(food_path) != 0:
+        tmp = moveVirtual(deepcopy(snake), deepcopy(food_path))
+        if len(tmp) != 0:
+            moveOneStep(snake, food_path)
         else:
-            # move to tail
-            path = AStar(Grid(snake[-1][0], snake[-1][1]), Grid(snake[0][0], snake[0][1]), snake).pathFinding()
-            turn(path)
+            moveOneStep(snake, tail_path)
+    else:
+        moveOneStep(snake, tail_path)
 
 
-if __name__ == "__main__":
-    main()
+def moveVirtual(snake_virtual, path_virtual) -> list[list]:
+    snake_virtual.reverse()
+    path_virtual.reverse()
+    length_snake = len(snake_virtual)
+    length_path = len(path_virtual)
+
+    if length_snake > length_path:
+        snake_virtual = path_virtual + snake_virtual[length_path:length_snake - length_path + 1]
+    else:
+        snake_virtual = path_virtual[0:length_snake]
+    snake_virtual.reverse()
+
+    return AStar(Grid(snake_virtual[-1][0], snake_virtual[-1][1]), Grid(snake_virtual[0][0], snake_virtual[0][1]),
+                 snake_virtual).pathFinding()
+
+
+def moveOneStep(snake_body, path):
+    pass

@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+
+
 class Grid(object):
     def __init__(self, x, y):
         self.x = x
@@ -85,7 +87,7 @@ class AStar(object):
         if self.open_list is None:
             self.open_list = []
 
-        if x < -200 or x >= 200 or y < -200 or y >= 200:
+        if (x < -200 or x >= 200) or (y < -200 or y >= 200):
             return False
         if [x, y] in snake_body:
             return False
@@ -104,7 +106,7 @@ class AStar(object):
 
         return False
 
-    def pathFinding(self) -> list:
+    def pathFinding(self) -> list[list]:
         result_grid = self.aStarSearch()
         path = []
         while result_grid is not None:
