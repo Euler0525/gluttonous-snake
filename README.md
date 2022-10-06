@@ -13,11 +13,17 @@
 ### 整体算法
 
 ```python
+pathfinding -> 起点到终点的最短路径
+moveVirtual -> 能否找到蛇尾
+
 # if 能吃到食物
+
      # 派虚拟蛇去吃，
             # if吃完能跟着蛇尾走 真蛇去吃
             # if吃完不能跟着蛇尾 真蛇跟着蛇尾走
+
 # else
+
     # 真蛇跟着蛇尾
 ```
 
@@ -60,3 +66,6 @@ def pathFinding():
 	pass
 ```
 
+## 效果截图
+
+![result](./img/result.gif)

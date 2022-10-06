@@ -1,6 +1,4 @@
 # -*- coding: utf-8 -*-
-
-
 class Grid(object):
     def __init__(self, x, y):
         self.x = x
@@ -70,14 +68,14 @@ class AStar(object):
             self.open_list = []
 
         neighbor_list = []
-        if self.isValid(self.snake_body, grid.x, grid.y - 1):
-            neighbor_list.append(Grid(grid.x, grid.y - 1))
-        if self.isValid(self.snake_body, grid.x, grid.y + 1):
-            neighbor_list.append(Grid(grid.x, grid.y + 1))
-        if self.isValid(self.snake_body, grid.x - 1, grid.y):
-            neighbor_list.append(Grid(grid.x - 1, grid.y))
-        if self.isValid(self.snake_body, grid.x + 1, grid.y):
-            neighbor_list.append(Grid(grid.x + 1, grid.y))
+        if self.isValid(self.snake_body, grid.x, grid.y - 10):
+            neighbor_list.append(Grid(grid.x, grid.y - 10))
+        if self.isValid(self.snake_body, grid.x, grid.y + 10):
+            neighbor_list.append(Grid(grid.x, grid.y + 10))
+        if self.isValid(self.snake_body, grid.x - 10, grid.y):
+            neighbor_list.append(Grid(grid.x - 10, grid.y))
+        if self.isValid(self.snake_body, grid.x + 10, grid.y):
+            neighbor_list.append(Grid(grid.x + 10, grid.y))
 
         return neighbor_list
 
@@ -113,4 +111,4 @@ class AStar(object):
             path.append([result_grid.x, result_grid.y])
             result_grid = result_grid.parent
 
-        return path[::-10]
+        return path[::-1]
