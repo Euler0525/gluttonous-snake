@@ -2,7 +2,7 @@
 from turtle import *
 from random import *
 
-snake = [[0, 10],[0, 0]]  # 蛇的起始位置
+snake = [[0, 0]]  # 蛇的起始位置
 aim_x, aim_y = 0, -10  # 蛇的起始方向
 
 
